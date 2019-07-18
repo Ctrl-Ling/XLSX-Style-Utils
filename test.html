@@ -342,14 +342,26 @@ function utilsTest(wb){
 	mergeCells(wb,"Sheet JS","A1","B1");
 	mergeCellsByObj(wb,"Sheet JS",[{s: {c: 0, r: 2},e: {c: 0, r: 3}}]);
 	setColWidth(wb,"Sheet JS",[{wpx: 45}, {wpx: 165}, {wpx: 45}, {wpx: 45}]);
-	setFillFgColorRGB(wb,"Sheet JS","B4","FFB6C1");
-	//setFillBgColorRGB(wb,"Sheet JS","B4","FFFFFF00");
 	
-	setBorderTopDefault(wb,"Sheet JS","B4");
-	setBorderDefault(wb,"Sheet JS","C4");
+	setFillFgColorRGB(wb,"Sheet JS","B4","FFB6C1");
+	//setFillBgColorRGB(wb,"Sheet JS","B4","FFB6C1");
+	
+	setFontSize(wb,"Sheet JS","B4",60);
+	setFontColorRGB(wb,"Sheet JS","B4","00BFFF");
+	setFontBold(wb,"Sheet JS","B4",true);
+	setFontUnderline(wb,"Sheet JS","B4",true);
+	setFontItalic(wb,"Sheet JS","B4",true);
+	setFontStrike(wb,"Sheet JS","B4",true);
+	setFontShadow(wb,"Sheet JS","B4",true);
+	setFontVertAlign(wb,"Sheet JS","B4",true);
+	
 	setAlignmentVertical(wb,"Sheet JS","B4","top");
 	setAlignmentHorizontal(wb,"Sheet JS","B4","center");
-	setFontBold(wb,"Sheet JS","B4",true);
+	
+	setBorderTopDefault(wb,"Sheet JS","B4");
+	setBorderRightDefault(wb,"Sheet JS","D3");
+	setBorderDefault(wb,"Sheet JS","C4");
+	
 	console.log(wb);
 }
 
