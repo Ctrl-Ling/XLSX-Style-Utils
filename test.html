@@ -40,6 +40,8 @@ a { text-decoration: none }
 <script>
 function doit(type, fn, dl) {
 	var elt = document.getElementById('data-table');
+	
+	//workbook例子
 	var wb1 = XLSX.utils.table_to_book(elt, {sheet:"Sheet JS"});
 
 	var wb2 = {"SheetNames":["Sheet JS"],"Sheets":{"Sheet JS":{"A1":{"v":"id"},"B1":{"v":"合并的列头1","s":{"font":{"sz":14,"bold":true,"color":{"rgb":"FFFFAA00"}},"fill":{"bgColor":{"indexed":64},"fgColor":{"rgb":"FFFFFF00"}}}},"C1":{"v":"合并的列头2"},"D1":{"v":"合并的列头3"},"E1":{"v":"合并的列头4"},"A2":{"v":"id"},"B2":{"v":"合并的列头1"},"C2":{"v":"合并的列头2"},"D2":{"v":"合并的列头3"},"E2":{"v":"合并的列头4"},"A3":{"v":"id"},"B3":{"v":"合并的列头1"},"C3":{"v":"合并的列头2"},"D3":{"v":"合并的列头3"},"E3":{"v":"合并的列头4"},"A4":{"v":1},"B4":{"v":"数据11"},"C4":{"v":"数据12"},"D4":{"v":"数据13"},"E4":{"v":"数据14"},"A5":{"v":2},"B5":{"v":"数据21"},"C5":{"v":"数据22"},"D5":{"v":"数据23"},"E5":{"v":"数据24"},"!merges":[{"s":{"c":1,"r":0},"e":{"c":4,"r":0}}],"!ref":"A1:E5"}},"SSF":{"0":"General","1":"0","2":"0.00","3":"#,##0","4":"#,##0.00","9":"0%","10":"0.00%","11":"0.00E+00","12":"# ?/?","13":"# ??/??","14":"m/d/yy","15":"d-mmm-yy","16":"d-mmm","17":"mmm-yy","18":"h:mm AM/PM","19":"h:mm:ss AM/PM","20":"h:mm","21":"h:mm:ss","22":"m/d/yy h:mm","37":"#,##0 ;(#,##0)","38":"#,##0 ;[Red](#,##0)","39":"#,##0.00;(#,##0.00)","40":"#,##0.00;[Red](#,##0.00)","45":"mm:ss","46":"[h]:mm:ss","47":"mmss.0","48":"##0.0E+0","49":"@","56":"\"上午/下午 \"hh\"時\"mm\"分\"ss\"秒 \"","65535":"General"},"Props":{"SheetNames":["Sheet JS"],"Worksheets":1,"Application":"SheetJS"}};
@@ -48,39 +50,37 @@ function doit(type, fn, dl) {
 
 	var wb4 = {"SheetNames":["Sheet JS"],"Sheets":{"Sheet JS":{"A1":{"v":"日期"},"B1":{"v":"配送信息"},"B4":{"v":"测试"},"C4":{"v":"测试2"},"C1":{"v":""},"D1":{"v":""},"E1":{"v":""},"F1":{"v":""},"A2":{"v":""},"B2":{"v":"姓名"},"C2":{"v":"地址"},"D2":{"v":""},"E2":{"v":""},"F2":{"v":""},"A3":{"v":""},"B3":{"v":""},"C3":{"v":"省份"},"D3":{"v":"市区"},"E3":{"v":"地址"},"F3":{"v":"邮编"},"!merges":[{"s":{"c":1,"r":0},"e":{"c":5,"r":0}},{"s":{"c":2,"r":1},"e":{"c":5,"r":1}},{"s":{"c":0,"r":0},"e":{"c":0,"r":2}},{"s":{"c":1,"r":1},"e":{"c":1,"r":2}}]}},"SSF":{"0":"General","1":"0","2":"0.00","3":"#,##0","4":"#,##0.00","9":"0%","10":"0.00%","11":"0.00E+00","12":"# ?/?","13":"# ??/??","14":"m/d/yy","15":"d-mmm-yy","16":"d-mmm","17":"mmm-yy","18":"h:mm AM/PM","19":"h:mm:ss AM/PM","20":"h:mm","21":"h:mm:ss","22":"m/d/yy h:mm","37":"#,##0 ;(#,##0)","38":"#,##0 ;[Red](#,##0)","39":"#,##0.00;(#,##0.00)","40":"#,##0.00;[Red](#,##0.00)","45":"mm:ss","46":"[h]:mm:ss","47":"mmss.0","48":"##0.0E+0","49":"@","56":"\"上午/下午 \"hh\"時\"mm\"分\"ss\"秒 \"","65535":"General"},"Props":{"SheetNames":["Sheet JS"],"Worksheets":1,"Application":"SheetJS"}};
 
-
-	//导出格式
+	//导出格式设置
 	var wopts = { bookType:'xlsx', bookSST:false, type:'binary' };
 
-
 	//test
-
 	var wb = wb1;
-	console.log(wb);
+	//console.log(wb);
+	var sheetName = wb.SheetNames[0];
 	utilsTest(wb);
 	function utilsTest(wb){
-		mergeCells(wb,"Sheet JS","A1","B1");
-		mergeCellsByObj(wb,"Sheet JS",[{s: {c: 0, r: 2},e: {c: 0, r: 3}}]);
-		setColWidth(wb,"Sheet JS",[{wpx: 45}, {wpx: 165}, {wpx: 45}, {wpx: 45}]);
+		mergeCells(wb,sheetName,"A1","B1");
+		mergeCellsByObj(wb,sheetName,[{s: {c: 0, r: 2},e: {c: 0, r: 3}}]);
+		setColWidth(wb,sheetName,[{wpx: 45}, {wpx: 165}, {wpx: 45}, {wpx: 45}]);
 		
-		setFillFgColorRGB(wb,"Sheet JS","B4","FFB6C1");
-		//setFillBgColorRGB(wb,"Sheet JS","B4","FFB6C1");
+		setFillFgColorRGB(wb,sheetName,"B4","FFB6C1");
+		//setFillBgColorRGB(wb,sheetName,"B4","FFB6C1");
 		
-		setFontSize(wb,"Sheet JS","B4",60);
-		setFontColorRGB(wb,"Sheet JS","B4","00BFFF");
-		setFontBold(wb,"Sheet JS","B4",true);
-		setFontUnderline(wb,"Sheet JS","B4",true);
-		setFontItalic(wb,"Sheet JS","B4",true);
-		setFontStrike(wb,"Sheet JS","B4",true);
-		setFontShadow(wb,"Sheet JS","B4",true);
-		setFontVertAlign(wb,"Sheet JS","B4",true);
+		setFontSize(wb,sheetName,"B4",60);
+		setFontColorRGB(wb,sheetName,"B4","00BFFF");
+		setFontBold(wb,sheetName,"B4",true);
+		setFontUnderline(wb,sheetName,"B4",true);
+		setFontItalic(wb,sheetName,"B4",true);
+		setFontStrike(wb,sheetName,"B4",true);
+		setFontShadow(wb,sheetName,"B4",true);
+		setFontVertAlign(wb,sheetName,"B4",true);
 		
-		setAlignmentVertical(wb,"Sheet JS","B4","top");
-		setAlignmentHorizontal(wb,"Sheet JS","B4","center");
+		setAlignmentVertical(wb,sheetName,"B4","top");
+		setAlignmentHorizontal(wb,sheetName,"B4","center");
 		
-		setBorderTopDefault(wb,"Sheet JS","B4");
-		setBorderRightDefault(wb,"Sheet JS","D3");
-		setBorderDefault(wb,"Sheet JS","C4");
+		setBorderTopDefault(wb,sheetName,"B4");
+		setBorderRightDefault(wb,sheetName,"D3");
+		setBorderDefault(wb,sheetName,"C4");
 		
 		console.log(wb);
 	}
