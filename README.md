@@ -1,7 +1,7 @@
-## XLSX-Style-Utils
-#基于SheetJS以及XLSX-Style的纯前端带样式导出表格到Excel的工具包
+### XLSX-Style-Utils
+##基于SheetJS以及XLSX-Style的纯前端带样式导出表格到Excel的工具包
 
-#背景
+##背景
 SheetJS（又名js-xlsx，npm库名称为xlsx，node库也叫node-xlsx，以下简称JX），免费版不支持样式调整。
 
 （顺便吐槽下这些名字乱的不行。。实际上又是同一个东西= =
@@ -15,7 +15,7 @@ XS官方说明文档：https://github.com/protobi/js-xlsx
 XLSX-Style-Utils：本项目 其本体为xlsxStyle.utils.js 以下简称utils
 
 
-#文件描述：
+##文件描述：
 
 FileSaver.js 导出保存excel用到的js
 
@@ -27,10 +27,11 @@ xlsxStyle.core.min.js XS最新版核心文件，因为其原本命名与JX一样
 
 xlsxStyle.utils.js 本项目核心文件，基于XS的方法二次封装，更好的控制导出excel的样式。以下简称utils
 
-#what did I do？
+##what did I do？
+
 由于JX和XS所暴露出来的方法调用变量名一样（都是XLSX），同时引用时必然会覆盖掉另一个，故我将XS所暴露的变量名修改为xlsxStyle。调用XS方法时请使用此变量名。调用JX方法时使用XLSX。具体原因参考:https://blog.csdn.net/tian_i/article/details/84327329
 对XS的样式调整进行二次封装在utils工具包中，部分测试用例参考：
-  
+  ```
   //wb即workbook
 	function utilsTest(wb){
 		mergeCells(wb,"Sheet JS","A1","B1");
@@ -55,15 +56,17 @@ xlsxStyle.utils.js 本项目核心文件，基于XS的方法二次封装，更�
 		setBorderRightDefault(wb,"Sheet JS","D3");
 		setBorderDefault(wb,"Sheet JS","C4");
 	}
-  
+  ```
   utils持续更新中。只干了一些微小的工作🐸测试用例较少，建议查看utils源码
   
-  #使用
+  ##使用
+  
   使用JX自带的方法将网页表格导出成不带样式的workbook（此处应该啃食一下官方文档以及下方参考文章），使用XLSX.table_to_sheet等方法.
   
   对workbook使用utils方法设置样式，得到带样式的workbook
   
-  ！重要
+  ##！重要！
+  
   使用xlsxStyle.write()处理workbook再用saveAs()保存成excel，具体参考test.html
   
   
@@ -71,6 +74,7 @@ xlsxStyle.utils.js 本项目核心文件，基于XS的方法二次封装，更�
   
   
   建议参考文章：
+  
   https://segmentfault.com/a/1190000018077543?utm_source=tag-newest
   https://www.cnblogs.com/liuxianan/p/js-excel.html
   https://www.jianshu.com/p/877631e7e411
