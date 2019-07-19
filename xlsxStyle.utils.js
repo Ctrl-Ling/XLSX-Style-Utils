@@ -50,7 +50,6 @@ function mergeCells(workBook, sheetName, startCell, endCell) {
             r: er //rows 结束行
         }
     }];
-	
 	if(!workBook.Sheets[sheetName]["!merges"]){
 		workBook.Sheets[sheetName]["!merges"]=merges;
 		console.log(workBook.Sheets[sheetName]["!merges"]);
