@@ -76,6 +76,8 @@ xlsxStyle.utils.js 本项目核心文件，基于XS的方法二次封装，更�
   
   ## 使用
   
+  在html头部引入4个JS即可
+  
   使用JX自带的方法将网页表格导出成不带样式的workbook（此处应该啃食一下官方文档以及下方参考文章），使用XLSX.table_to_book等方法.
   
   对workbook使用utils方法设置样式，得到带样式的workbook
