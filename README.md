@@ -31,7 +31,7 @@ xlsxStyle.utils.js 本项目核心文件，基于XS的方法二次封装，更�
 
 由于JX和XS所暴露出来的方法调用变量名一样（都是XLSX），同时引用时必然会覆盖掉另一个，故我将XS所暴露的变量名修改为xlsxStyle。调用XS方法时请使用此变量名。调用JX方法时使用XLSX。具体原因参考:https://blog.csdn.net/tian_i/article/details/84327329
 对XS的样式调整进行二次封装在utils工具包中，部分测试用例参考：
-  ```
+  ```javascript
   //wb即workbook
 	function utilsTest(wb){
 		mergeCells(wb,"Sheet JS","A1","B1");
@@ -76,9 +76,16 @@ xlsxStyle.utils.js 本项目核心文件，基于XS的方法二次封装，更�
   ## 建议参考文章：
   
   https://segmentfault.com/a/1190000018077543?utm_source=tag-newest
+  
   https://www.cnblogs.com/liuxianan/p/js-excel.html
+  
   https://www.jianshu.com/p/877631e7e411
+  
   https://www.jianshu.com/p/74d405940305
+  
   https://www.jianshu.com/p/869375439fee
+  
   https://blog.csdn.net/tian_i/article/details/84327329
+  
+
   
