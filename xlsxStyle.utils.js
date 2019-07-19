@@ -130,7 +130,7 @@ function setFillPatternType(workBook,sheetName,cell,patternType){
 	return workBook;
 }
 
-//字体(前景)颜色 rgb 
+//前景颜色(单元格颜色) rgb 
 //COLOR_SPEC属性值:{ auto: 1}指定自动值,{ rgb: "FFFFAA00" }指定16进制的ARGB,{ theme: "1", tint: "-0.25"}指定主题颜色和色调的整数索引（默认值为0）,{ indexed: 64} 默认值 fill.bgColor
 function setFillFgColor(workBook,sheetName,cell,COLOR_SPEC){
 	init1(workBook,sheetName,cell,"fill");
@@ -144,7 +144,7 @@ function setFillFgColorRGB(workBook,sheetName,cell,rgb){
 	return workBook;
 }
 
-//单元格背景颜色
+//单元格背景颜色（貌似没用）
 function setFillBgColor(workBook,sheetName,cell,COLOR_SPEC){
 	init1(workBook,sheetName,cell,"fill");
 	workBook.Sheets[sheetName][cell].s.fill.bgColor = COLOR_SPEC;
