@@ -32,10 +32,8 @@ function init2(workBook,sheetName,cell,attr1,attr2){
 //单元格合并 startCell=A1 endCell=B5
 function mergeCells(workBook, sheetName, startCell, endCell) {
     var sc = startCell.substr(0, 1).charCodeAt(0) - 65;
-	console.log(sc);
     var sr = startCell.substr(1);
 	sr = parseInt(sr)-1;
-	console.log(sr);
     var ec = endCell.substr(0, 1).charCodeAt(0) - 65;
     var er = endCell.substr(1)
 	er = parseInt(er)-1;
@@ -52,12 +50,9 @@ function mergeCells(workBook, sheetName, startCell, endCell) {
     }];
 	if(!workBook.Sheets[sheetName]["!merges"]){
 		workBook.Sheets[sheetName]["!merges"]=merges;
-		console.log(workBook.Sheets[sheetName]["!merges"]);
 	}
 	else{
-		console.log(workBook.Sheets[sheetName]["!merges"]);
 		workBook.Sheets[sheetName]["!merges"]=workBook.Sheets[sheetName]["!merges"].concat(merges);
-		console.log(workBook.Sheets[sheetName]["!merges"]);
 	}
 	
 	return workBook;
