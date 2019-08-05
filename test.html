@@ -54,14 +54,14 @@ function doit(type, fn, dl) {
 	var wopts = { bookType:'xlsx', bookSST:false, type:'binary' };
 
 	//test
-	var wb = wb1;
+	var wb = wb2;
 	console.log(wb);
 	var sheetName = wb.SheetNames[0];
 	utilsTest(wb);
 	function utilsTest(wb){
 		mergeCells(wb,sheetName,"A1","B1");
 		mergeCellsByObj(wb,sheetName,[{s: {c: 0, r: 2},e: {c: 0, r: 3}}]);
-		setColWidth(wb,sheetName,[{wpx: 45}, {wpx: 165}, {wpx: 45}, {wpx: 45}]);
+		//setColWidth(wb,sheetName,[{wpx: 45}, {wpx: 165}, {wpx: 45}, {wpx: 45}]);
 		
 		setFillFgColorRGB(wb,sheetName,"B4","FFB6C1");
 		//setFillBgColorRGB(wb,sheetName,"B4","FFB6C1");
@@ -83,6 +83,10 @@ function doit(type, fn, dl) {
 		setBorderDefault(wb,sheetName,"C4");
 		
 		console.log(wb);
+
+		setAllDefaultBorderStyles(wb,sheetName);
+		setDefaultTitleStyles(wb,sheetName);
+		setEvenRowColorGrey(wb,sheetName);
 	}
 
 
