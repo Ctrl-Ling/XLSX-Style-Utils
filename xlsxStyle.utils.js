@@ -408,11 +408,27 @@ function setAlignmentStyles(workBook, sheetName, cell, styles) {
 	return workBook;
 }
 
+function setAlignmentStylesAll(workBook, sheetName,styles) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setAlignmentStyles(workBook, sheetName, cell, styles);
+		}
+	}
+}
+
 //文本垂直对齐 vertical	="bottom" or "center" or "top"
 function setAlignmentVertical(workBook, sheetName, cell, vertical) {
 	init1(workBook, sheetName, cell, "alignment");
 	workBook.Sheets[sheetName][cell].s.alignment.vertical = vertical;
 	return workBook;
+}
+
+function setAlignmentVerticalAll(workBook, sheetName,vertical) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setAlignmentVertical(workBook, sheetName, cell, vertical);
+		}
+	}
 }
 
 //文本水平对齐 "bottom" or "center" or "top"
@@ -422,16 +438,41 @@ function setAlignmentHorizontal(workBook, sheetName, cell, horizontal) {
 	return workBook;
 }
 
+function setAlignmentHorizontalAll(workBook, sheetName,horizontal) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setAlignmentHorizontal(workBook, sheetName, cell, horizontal);
+		}
+	}
+}
+
+//
 function setAlignmentWrapText(workBook, sheetName, cell, isWrapText) {
 	init1(workBook, sheetName, cell, "alignment");
 	workBook.Sheets[sheetName][cell].s.alignment.isWrapText = isWrapText;
 	return workBook;
 }
 
+function setAlignmentWrapTextAll(workBook, sheetName,isWrapText) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setAlignmentWrapText(workBook, sheetName, cell, isWrapText);
+		}
+	}
+}
+
 function setAlignmentReadingOrder(workBook, sheetName, cell, readingOrder) {
 	init1(workBook, sheetName, cell, "alignment");
 	workBook.Sheets[sheetName][cell].s.alignment.readingOrder = readingOrder;
 	return workBook;
+}
+
+function setAlignmentReadingOrderAll(workBook, sheetName,readingOrder) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setAlignmentReadingOrder(workBook, sheetName, cell, readingOrder);
+		}
+	}
 }
 
 //文本旋转角度 0-180，255 is special, aligned vertically
@@ -441,16 +482,15 @@ function setAlignmentTextRotation(workBook, sheetName, cell, textRotation) {
 	return workBook;
 }
 
-
+function setAlignmentTextRotationAll(workBook, sheetName,textRotation) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setAlignmentTextRotation(workBook, sheetName, cell, textRotation);
+		}
+	}
+}
 
 /*Border*/
-
-//边框 styles={top:{ style:"thin",color:"FFFFAA00"},bottom:{},...}
-function setBorderStyles(workBook, sheetName, cell, styles) {
-	init(workBook, sheetName, cell);
-	workBook.Sheets[sheetName][cell].s.border = styles;
-	return workBook;
-}
 
 //单元格四周边框默认样式
 const borderAll = {
@@ -473,22 +513,34 @@ const defaultBorderStyle = {
 	style: 'thin'
 };
 
-function setBorderDefault(workBook, sheetName, cell) {
-	//workBook.Sheets[sheetName][cell].s= {};
-	/*if(!workBook.Sheets[sheetName][cell].s.alignment){
-	workBook.Sheets[sheetName][cell].s.alignment = {};
+//边框 styles={top:{ style:"thin",color:"FFFFAA00"},bottom:{},...}
+function setBorderStyles(workBook, sheetName, cell, styles) {
+	init(workBook, sheetName, cell);
+	workBook.Sheets[sheetName][cell].s.border = styles;
+	return workBook;
+}
+
+function setBorderStylesAll(workBook, sheetName,styles) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setBorderStyles(workBook, sheetName, cell, styles);
+		}
 	}
-	if(!workBook.Sheets[sheetName][cell].s.alignment.horizontal){
-	workBook.Sheets[sheetName][cell].s.alignment.horizontal = {};
-	}*/
-	//init1(workBook,sheetName,cell,"alignment");
+}
 
-	//init1(workBook,sheetName,cell,"border");
-	//workBook.Sheets[sheetName][cell].s.alignment.horizontal = "center";
-
+//设置单元格上下左右边框
+function setBorderDefault(workBook, sheetName, cell) {
 	init(workBook, sheetName, cell);
 	workBook.Sheets[sheetName][cell].s.border = borderAll;
 	return workBook;
+}
+
+function setBorderDefaultAll(workBook, sheetName) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setBorderDefault(workBook, sheetName, cell);
+		}
+	}
 }
 
 //上边框
@@ -498,11 +550,27 @@ function setBorderTop(workBook, sheetName, cell, top) {
 	return workBook;
 }
 
+function setBorderTopAll(workBook, sheetName,top) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setBorderTop(workBook, sheetName, cell, top);
+		}
+	}
+}
+
 //上边框默样式
 function setBorderTopDefault(workBook, sheetName, cell) {
 	init1(workBook, sheetName, cell, "border");
 	workBook.Sheets[sheetName][cell].s.border.top = defaultBorderStyle;
 	return workBook;
+}
+
+function setBorderTopDefaultAll(workBook, sheetName) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setBorderTopDefault(workBook, sheetName, cell);
+		}
+	}
 }
 
 //下边框
@@ -512,6 +580,15 @@ function setBorderBottom(workBook, sheetName, cell, bottom) {
 	return workBook;
 }
 
+function setBorderBottomAll(workBook, sheetName,bottom) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setBorderBottom(workBook, sheetName, cell, bottom);
+		}
+	}
+}
+
+
 //下边框默样式
 function setBorderBottomDefault(workBook, sheetName, cell) {
 	init1(workBook, sheetName, cell, "border");
@@ -519,10 +596,27 @@ function setBorderBottomDefault(workBook, sheetName, cell) {
 	return workBook;
 }
 
+function setBorderBottomDefaultAll(workBook, sheetName) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setBorderBottomDefault(workBook, sheetName, cell);
+		}
+	}
+}
+
+//左边框
 function setBorderLeft(workBook, sheetName, cell, left) {
 	init1(workBook, sheetName, cell, "border");
 	workBook.Sheets[sheetName][cell].s.border.left = left;
 	return workBook;
+}
+
+function setBorderLeftAll(workBook, sheetName,left) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setBorderLeft(workBook, sheetName, cell, left);
+		}
+	}
 }
 
 function setBorderLeftDefault(workBook, sheetName, cell) {
@@ -531,16 +625,41 @@ function setBorderLeftDefault(workBook, sheetName, cell) {
 	return workBook;
 }
 
+function setBorderLeftDefaultAll(workBook, sheetName) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setBorderLeftDefault(workBook, sheetName, cell);
+		}
+	}
+}
+
+//右边框
 function setBorderRight(workBook, sheetName, cell, right) {
 	init1(workBook, sheetName, cell, "border");
 	workBook.Sheets[sheetName][cell].s.border.right = right;
 	return workBook;
 }
 
+function setBorderRightAll(workBook, sheetName,right) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setBorderRight(workBook, sheetName, cell, right);
+		}
+	}
+}
+
 function setBorderRightDefault(workBook, sheetName, cell) {
 	init1(workBook, sheetName, cell, "border");
 	workBook.Sheets[sheetName][cell].s.border.right = defaultBorderStyle;
 	return workBook;
+}
+
+function setBorderRightDefaultAll(workBook, sheetName) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setBorderRightDefault(workBook, sheetName, cell);
+		}
+	}
 }
 
 //对角线
@@ -550,10 +669,26 @@ function setBorderDiagonal(workBook, sheetName, cell, diagonal) {
 	return workBook;
 }
 
+function setBorderDiagonalAll(workBook, sheetName,diagonal) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setBorderDiagonal(workBook, sheetName, cell, diagonal);
+		}
+	}
+}
+
 function setBorderDiagonalDefault(workBook, sheetName, cell) {
 	init1(workBook, sheetName, cell, "border");
 	workBook.Sheets[sheetName][cell].s.border.diagonal = defaultBorderStyle;
 	return workBook;
+}
+
+function setBorderDiagonalDefaultAll(workBook, sheetName) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setBorderDiagonalDefault(workBook, sheetName, cell);
+		}
+	}
 }
 
 function setBorderDiagonalUp(workBook, sheetName, cell, isDiagonalUp) {
@@ -562,12 +697,27 @@ function setBorderDiagonalUp(workBook, sheetName, cell, isDiagonalUp) {
 	return workBook;
 }
 
+function setBorderDiagonalUpAll(workBook, sheetName,isDiagonalUp) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setBorderDiagonalUp(workBook, sheetName, cell, isDiagonalUp);
+		}
+	}
+}
+
 function setBorderDiagonalDown(workBook, sheetName, cell, isDiagonalDown) {
 	init1(workBook, sheetName, cell, "border");
 	workBook.Sheets[sheetName][cell].s.border.diagonalDown = isDiagonalDown;
 	return workBook;
 }
 
+function setBorderDiagonalDownAll(workBook, sheetName,isDiagonalDown) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			setBorderDiagonalDown(workBook, sheetName, cell, isDiagonalDown);
+		}
+	}
+}
 
 //默认样式，多单元格设置样式
 
