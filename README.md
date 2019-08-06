@@ -1,5 +1,5 @@
 # XLSX-Style-Utils
-## 基于SheetJS以及XLSX-Style的纯前端带样式导出表格为Excel的工具包
+## 基于SheetJS以及XLSX-Style的纯前端带样式导出表格为Excel工具包
 
 ## 背景
 SheetJS（又名js-xlsx，npm库名称为xlsx，node库也叫node-xlsx，以下简称JX），免费版不支持样式调整。
