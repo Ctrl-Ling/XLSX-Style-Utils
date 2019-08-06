@@ -54,7 +54,7 @@ function doit(type, fn, dl) {
 	var wopts = { bookType:'xlsx', bookSST:false, type:'binary' };
 
 	//test
-	var wb = wb2;
+	var wb = wb1;
 	console.log(wb);
 	var sheetName = wb.SheetNames[0];
 	utilsTest(wb);
@@ -84,8 +84,8 @@ function doit(type, fn, dl) {
 		
 		console.log(wb);
 
-		setAllDefaultBorderStyles(wb,sheetName);
-		setDefaultTitleStyles(wb,sheetName);
+		setBorderDefaultAll(wb,sheetName);
+		setTitleStylesDefault(wb,sheetName);
 		setEvenRowColorGrey(wb,sheetName);
 	}
 

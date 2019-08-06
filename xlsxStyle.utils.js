@@ -535,6 +535,7 @@ function setBorderDefault(workBook, sheetName, cell) {
 	return workBook;
 }
 
+//设置所有单元默认格边框
 function setBorderDefaultAll(workBook, sheetName) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
@@ -731,16 +732,6 @@ function setFgColorStylesAll(workBook, sheetName,fontType,fontColor,fontSize) {
 		}
 	}
 }
-
-//设置所有单元默认格边框
-function setBorderStylesDefaultAll(workBook, sheetName) {
-	for (cell in workBook.Sheets[sheetName]) {
-		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
-			setBorderDefault(workBook, sheetName, cell);
-		}
-	}
-}
-
 
 //设置第一行标题自定义样式
 function setTitleStyles(workBook, sheetName, fgColor, fontColor, alignment, isBold, fontSize, ) {
