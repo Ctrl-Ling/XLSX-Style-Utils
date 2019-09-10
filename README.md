@@ -37,18 +37,20 @@ xlsxStyle.utils.js 本项目核心文件，基于XS的方法二次封装，更�
 	var elt = document.getElementById('data-table');
 	//从table转换成workbook
 	var wb1 = XLSX.utils.table_to_book(elt, {sheet:"Sheet JS"});
-  	//导出格式设置
+	//导出格式设置
 	var wopts = { bookType:'xlsx', bookSST:false, type:'binary' };
 	//test
 	var wb = wb1;
+	console.log(wb);
 	var sheetName = wb.SheetNames[0];
 	utilsTest(wb);
 	function utilsTest(wb){
 		mergeCells(wb,sheetName,"A1","B1");
 		mergeCellsByObj(wb,sheetName,[{s: {c: 0, r: 2},e: {c: 0, r: 3}}]);
-		setColWidth(wb,sheetName,[{wpx: 45}, {wpx: 165}, {wpx: 45}, {wpx: 45}]);
+		//setColWidth(wb,sheetName,[{wpx: 45}, {wpx: 165}, {wpx: 45}, {wpx: 45}]);
 		
 		setFillFgColorRGB(wb,sheetName,"B4","FFB6C1");
+		//setFillBgColorRGB(wb,sheetName,"B4","FFB6C1");
 		
 		setFontSize(wb,sheetName,"B4",60);
 		setFontColorRGB(wb,sheetName,"B4","00BFFF");
@@ -65,6 +67,12 @@ xlsxStyle.utils.js 本项目核心文件，基于XS的方法二次封装，更�
 		setBorderTopDefault(wb,sheetName,"B4");
 		setBorderRightDefault(wb,sheetName,"D3");
 		setBorderDefault(wb,sheetName,"C4");
+		
+		console.log(wb);
+
+		setBorderDefaultAll(wb,sheetName);
+		setTitleStylesDefault(wb,sheetName);
+		setEvenRowColorGrey(wb,sheetName);
 	}
 	//转换成二进制
 	var wbout = xlsxStyle.write(wb,wopts);
