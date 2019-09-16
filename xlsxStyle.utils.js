@@ -446,7 +446,7 @@ function setAlignmentHorizontalAll(workBook, sheetName,horizontal) {
 	}
 }
 
-//
+//自动换行
 function setAlignmentWrapText(workBook, sheetName, cell, isWrapText) {
 	init1(workBook, sheetName, cell, "alignment");
 	workBook.Sheets[sheetName][cell].s.alignment.isWrapText = isWrapText;
