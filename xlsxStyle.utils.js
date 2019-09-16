@@ -292,6 +292,28 @@ function setFontBoldAll(workBook, sheetName,isBold) {
 	}
 }
 
+//设置某列为粗体
+function setFontBoldOfCols(workBook, sheetName,isBold,col) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			if (cell.substr(0,1) == col){
+				setFontBold(workBook, sheetName, cell, isBold);				
+			}
+		}
+	}
+}
+
+//设置某行为粗体
+function setFontBoldOfRows(workBook, sheetName,isBold,row) {
+	for (cell in workBook.Sheets[sheetName]) {
+		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+			if (cell.substr(1) == row){
+				setFontBold(workBook, sheetName, cell, isBold);				
+			}
+		}
+	}
+}
+
 //是否下划线 boolean isUnderline
 function setFontUnderline(workBook, sheetName, cell, isUnderline) {
 	init1(workBook, sheetName, cell, "font");
@@ -449,7 +471,7 @@ function setAlignmentHorizontalAll(workBook, sheetName,horizontal) {
 //自动换行
 function setAlignmentWrapText(workBook, sheetName, cell, isWrapText) {
 	init1(workBook, sheetName, cell, "alignment");
-	workBook.Sheets[sheetName][cell].s.alignment.isWrapText = isWrapText;
+	workBook.Sheets[sheetName][cell].s.alignment.wrapText = isWrapText;
 	return workBook;
 }
 
@@ -755,7 +777,7 @@ function setTitleStylesDefault(workBook, sheetName) {
 	for (cell in workBook.Sheets[sheetName]) {
 		row = cell.substr(1);
 		if (row == '1') {
-			setFillFgColorRGB(workBook, sheetName, cell, 'FFFF00');
+			//setFillFgColorRGB(workBook, sheetName, cell, 'FFFF00');
 			setAlignmentHorizontal(workBook, sheetName, cell, 'center');
 			setFontBold(workBook, sheetName, cell, true);
 			setFontSize(workBook, sheetName, cell, '20');
