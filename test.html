@@ -58,43 +58,42 @@ function doit(type, fn, dl) {
 	console.log(wb);
 	var sheetName = wb.SheetNames[0];
 	utilsTest(wb);
+	//使用xlsxStyle.utils（XSU）对Workbook进行样式自定义
 	function utilsTest(wb){
-		mergeCells(wb,sheetName,"A1","B1");
-		mergeCellsByObj(wb,sheetName,[{s: {c: 0, r: 2},e: {c: 0, r: 3}}]);
+		XSU.mergeCells(wb,sheetName,"A1","B1");
+		XSU.mergeCellsByObj(wb,sheetName,[{s: {c: 0, r: 2},e: {c: 0, r: 3}}]);
 		//setColWidth(wb,sheetName,[{wpx: 45}, {wpx: 165}, {wpx: 45}, {wpx: 45}]);
 		
-		setFillFgColorRGB(wb,sheetName,"B4","FFB6C1");
+		XSU.setFillFgColorRGB(wb,sheetName,"B4","FFB6C1");
 		//setFillBgColorRGB(wb,sheetName,"B4","FFB6C1");
 		
-		setFontSize(wb,sheetName,"B4",60);
-		setFontColorRGB(wb,sheetName,"B4","00BFFF");
-		setFontBold(wb,sheetName,"B4",true);
-		setFontUnderline(wb,sheetName,"B4",true);
-		setFontItalic(wb,sheetName,"B4",true);
-		setFontStrike(wb,sheetName,"B4",true);
-		setFontShadow(wb,sheetName,"B4",true);
-		setFontVertAlign(wb,sheetName,"B4",true);
+		XSU.setFontSize(wb,sheetName,"B4",60);
+		XSU.setFontColorRGB(wb,sheetName,"B4","00BFFF");
+		XSU.setFontBold(wb,sheetName,"B4",true);
+		XSU.setFontUnderline(wb,sheetName,"B4",true);
+		XSU.setFontItalic(wb,sheetName,"B4",true);
+		XSU.setFontStrike(wb,sheetName,"B4",true);
+		XSU.setFontShadow(wb,sheetName,"B4",true);
+		XSU.setFontVertAlign(wb,sheetName,"B4",true);
 		
-		setAlignmentVertical(wb,sheetName,"B4","top");
-		setAlignmentHorizontal(wb,sheetName,"B4","center");
+		XSU.setAlignmentVertical(wb,sheetName,"B4","top");
+		XSU.setAlignmentHorizontal(wb,sheetName,"B4","center");
 		
-		setBorderTopDefault(wb,sheetName,"B4");
-		setBorderRightDefault(wb,sheetName,"D3");
-		setBorderDefault(wb,sheetName,"C4");
+		XSU.setBorderTopDefault(wb,sheetName,"B4");
+		XSU.setBorderRightDefault(wb,sheetName,"D3");
+		XSU.setBorderDefault(wb,sheetName,"C4");
 		
 		console.log(wb);
 
-		setBorderDefaultAll(wb,sheetName);
-		setTitleStylesDefault(wb,sheetName);
-		setEvenRowColorGrey(wb,sheetName);
+		XSU.setBorderDefaultAll(wb,sheetName);
+		XSU.setTitleStylesDefault(wb,sheetName);
+		XSU.setEvenRowColorGrey(wb,sheetName);
 	}
 
-
-
-	//转换成二进制
+	//转换成二进制 使用xlsx-style（XS）进行转换才能得到带样式Excel
 	var wbout = xlsxStyle.write(wb,wopts);
 	//保存，使用FileSaver.js
-	return saveAs(new Blob([s2ab(wbout)],{type:""}), "test.xlsx");
+	return saveAs(new Blob([XSU.s2ab(wbout)],{type:""}), "test.xlsx");
 
 	/*return dl ?
 		XLSX.write(wb, {bookType:type, bookSST:true, type: 'base64'}) :
@@ -119,6 +118,8 @@ var aoa = [
 	[1,        2,        3,      4],
 	["Click",  "to",     "edit", "cells"]
 ];
+
+//使用js-xlsx（JX）的方法将表格转换为workbook
 var ws = XLSX.utils.aoa_to_sheet(aoa);
 var html_string = XLSX.utils.sheet_to_html(ws, { id: "data-table", editable: true });
 document.getElementById("container").innerHTML = html_string;

@@ -1,6 +1,14 @@
-var XSU = $;
+/*
+@author Ctrl
+@version 20190917
+@aim 对xlsx-style方法进行二次封装 方便调用以导出带样式Excel
+@usage XSU.xxxFunction()
+*/
 
-XSU.extend({
+
+var XSU;
+
+XSU=({
 
 	//字符串转字符流
 	s2ab: function(s) {
@@ -850,6 +858,5 @@ XSU.extend({
 			}
 		}
 	},
-
 
 })
