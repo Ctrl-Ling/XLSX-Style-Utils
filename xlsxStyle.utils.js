@@ -29,14 +29,56 @@ function init2(workBook, sheetName, cell, attr1, attr2) {
 	}
 }
 
+//根据ref的单元格范围新建范围内所有单元格,不存在的单元格置为空值,已存在的不处理
+function initAllCell(workBook, sheetName) {
+	var ref = workBook.Sheets[sheetName]["!ref"].split(":");
+	var startCell = ref[0];
+	var endCell = ref[1];
+	var sc = XLSX.utils.decode_cell(startCell).c;
+	var sr = XLSX.utils.decode_cell(startCell).r;
+	var ec = XLSX.utils.decode_cell(endCell).c;
+	var er = XLSX.utils.decode_cell(endCell).r;
+	var isExist;
+	for (c = sc; c <= ec; c++) { //初始化所有单元格
+		for (r = sr; r <= er; r++) {
+			var temp = XLSX.utils.encode_cell({
+				c: c,
+				r: r
+			});
+			isExist = false;
+			for (cell in workBook.Sheets[sheetName]) {
+				if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+					if (temp == cell) {
+						isExist = true;
+						break;
+					}
+				}
+			}
+			if (!isExist) { //单元格不存在则新建单元格
+				XLSX.utils.sheet_add_aoa(workBook.Sheets[sheetName], [
+					['']
+				], {
+					origin: temp
+				});
+			}
+
+		}
+	}
+}
+
 //单元格合并 startCell=A1 endCell=B5
 function mergeCells(workBook, sheetName, startCell, endCell) {
-	var sc = startCell.substr(0, 1).charCodeAt(0) - 65;
+	/*var sc = startCell.substr(0, 1).charCodeAt(0) - 65;
 	var sr = startCell.substr(1);
 	sr = parseInt(sr) - 1;
 	var ec = endCell.substr(0, 1).charCodeAt(0) - 65;
 	var er = endCell.substr(1)
-	er = parseInt(er) - 1;
+	er = parseInt(er) - 1;*/
+
+	var sc = XLSX.utils.decode_cell(startCell).c;
+	var sr = XLSX.utils.decode_cell(startCell).r;
+	var ec = XLSX.utils.decode_cell(endCell).c;
+	var er = XLSX.utils.decode_cell(endCell).r;
 
 	var merges = [{
 		s: { //s start 始单元格
@@ -115,7 +157,7 @@ function setFillStyles(workBook, sheetName, cell, styles) {
 	return workBook;
 }
 
-function setFillStylesAll(workBook, sheetName,styles) {
+function setFillStylesAll(workBook, sheetName, styles) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFillStyles(workBook, sheetName, cell, styles);
@@ -130,7 +172,7 @@ function setFillPatternType(workBook, sheetName, cell, patternType) {
 	return workBook;
 }
 
-function setFillPatternTypeAll(workBook, sheetName,patternType) {
+function setFillPatternTypeAll(workBook, sheetName, patternType) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFillPatternType(workBook, sheetName, cell, patternType);
@@ -146,7 +188,7 @@ function setFillFgColor(workBook, sheetName, cell, COLOR_SPEC) {
 	return workBook;
 }
 
-function setFillFgColorAll(workBook, sheetName,COLOR_SPEC) {
+function setFillFgColorAll(workBook, sheetName, COLOR_SPEC) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFillFgColor(workBook, sheetName, cell, COLOR_SPEC);
@@ -161,7 +203,7 @@ function setFillFgColorRGB(workBook, sheetName, cell, rgb) {
 	return workBook;
 }
 
-function setFillFgColorRGBAll(workBook, sheetName,rgb) {
+function setFillFgColorRGBAll(workBook, sheetName, rgb) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFillFgColorRGB(workBook, sheetName, cell, rgb);
@@ -176,7 +218,7 @@ function setFillBgColor(workBook, sheetName, cell, COLOR_SPEC) {
 	return workBook;
 }
 
-function setFillBgColorAll(workBook, sheetName,COLOR_SPEC) {
+function setFillBgColorAll(workBook, sheetName, COLOR_SPEC) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFillBgColor(workBook, sheetName, cell, COLOR_SPEC);
@@ -191,7 +233,7 @@ function setFillBgColorRGB(workBook, sheetName, cell, rgb) {
 	return workBook;
 }
 
-function setFillBgColorRGBAll(workBook, sheetName,rgb) {
+function setFillBgColorRGBAll(workBook, sheetName, rgb) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFillBgColorRGB(workBook, sheetName, cell, rgb);
@@ -208,7 +250,7 @@ function setFontStyles(workBook, sheetName, cell, styles) {
 	return workBook;
 }
 
-function setFontStylesAll(workBook, sheetName,styles) {
+function setFontStylesAll(workBook, sheetName, styles) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFontStyles(workBook, sheetName, cell, styles);
@@ -223,7 +265,7 @@ function setFontType(workBook, sheetName, cell, type) {
 	return workBook;
 }
 
-function setFontTypeAll(workBook, sheetName,type) {
+function setFontTypeAll(workBook, sheetName, type) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFontType(workBook, sheetName, cell, type);
@@ -238,7 +280,7 @@ function setFontSize(workBook, sheetName, cell, size) {
 	return workBook;
 }
 
-function setFontSizeAll(workBook, sheetName,size) {
+function setFontSizeAll(workBook, sheetName, size) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFontSize(workBook, sheetName, cell, size);
@@ -254,7 +296,7 @@ function setFontColor(workBook, sheetName, cell, COLOR_SPEC) {
 	return workBook;
 }
 
-function setFontColorAll(workBook, sheetName,COLOR_SPEC) {
+function setFontColorAll(workBook, sheetName, COLOR_SPEC) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFontColor(workBook, sheetName, cell, COLOR_SPEC);
@@ -269,7 +311,7 @@ function setFontColorRGB(workBook, sheetName, cell, rgb) {
 	return workBook;
 }
 
-function setFontColorRGBAll(workBook, sheetName,rgb) {
+function setFontColorRGBAll(workBook, sheetName, rgb) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFontColorRGB(workBook, sheetName, cell, rgb);
@@ -284,7 +326,7 @@ function setFontBold(workBook, sheetName, cell, isBold) {
 	return workBook;
 }
 
-function setFontBoldAll(workBook, sheetName,isBold) {
+function setFontBoldAll(workBook, sheetName, isBold) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFontBold(workBook, sheetName, cell, isBold);
@@ -293,22 +335,22 @@ function setFontBoldAll(workBook, sheetName,isBold) {
 }
 
 //设置某列为粗体
-function setFontBoldOfCols(workBook, sheetName,isBold,col) {
+function setFontBoldOfCols(workBook, sheetName, isBold, col) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
-			if (cell.substr(0,1) == col){
-				setFontBold(workBook, sheetName, cell, isBold);				
+			if (cell.substr(0, 1) == col) {
+				setFontBold(workBook, sheetName, cell, isBold);
 			}
 		}
 	}
 }
 
 //设置某行为粗体
-function setFontBoldOfRows(workBook, sheetName,isBold,row) {
+function setFontBoldOfRows(workBook, sheetName, isBold, row) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
-			if (cell.substr(1) == row){
-				setFontBold(workBook, sheetName, cell, isBold);				
+			if (cell.substr(1) == row) {
+				setFontBold(workBook, sheetName, cell, isBold);
 			}
 		}
 	}
@@ -321,7 +363,7 @@ function setFontUnderline(workBook, sheetName, cell, isUnderline) {
 	return workBook;
 }
 
-function setFontUnderlineAll(workBook, sheetName,isUnderline) {
+function setFontUnderlineAll(workBook, sheetName, isUnderline) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFontUnderline(workBook, sheetName, cell, isUnderline);
@@ -336,7 +378,7 @@ function setFontItalic(workBook, sheetName, cell, isItalic) {
 	return workBook;
 }
 
-function setFontItalicAll(workBook, sheetName,isItalic) {
+function setFontItalicAll(workBook, sheetName, isItalic) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFontItalic(workBook, sheetName, cell, isItalic);
@@ -351,7 +393,7 @@ function setFontStrike(workBook, sheetName, cell, isStrike) {
 	return workBook;
 }
 
-function setFontStrikeAll(workBook, sheetName,isStrike) {
+function setFontStrikeAll(workBook, sheetName, isStrike) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFontStrike(workBook, sheetName, cell, isStrike);
@@ -366,7 +408,7 @@ function setFontOutline(workBook, sheetName, cell, isOutline) {
 	return workBook;
 }
 
-function setFontOutlineAll(workBook, sheetName,isOutline) {
+function setFontOutlineAll(workBook, sheetName, isOutline) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFontOutline(workBook, sheetName, cell, isOutline);
@@ -381,7 +423,7 @@ function setFontShadow(workBook, sheetName, cell, isShadow) {
 	return workBook;
 }
 
-function setFontShadowAll(workBook, sheetName,isShadow) {
+function setFontShadowAll(workBook, sheetName, isShadow) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFontShadow(workBook, sheetName, cell, isShadow);
@@ -396,7 +438,7 @@ function setFontVertAlign(workBook, sheetName, cell, isVertAlign) {
 	return workBook;
 }
 
-function setFontVertAlignAll(workBook, sheetName,isVertAlign) {
+function setFontVertAlignAll(workBook, sheetName, isVertAlign) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setFontVertAlign(workBook, sheetName, cell, isVertAlign);
@@ -413,7 +455,7 @@ function setNumFmt(workBook, sheetName, cell, numFmt) {
 	return workBook;
 }
 
-function setNumFmtAll(workBook, sheetName,numFmt) {
+function setNumFmtAll(workBook, sheetName, numFmt) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setNumFmt(workBook, sheetName, cell, numFmt);
@@ -430,7 +472,7 @@ function setAlignmentStyles(workBook, sheetName, cell, styles) {
 	return workBook;
 }
 
-function setAlignmentStylesAll(workBook, sheetName,styles) {
+function setAlignmentStylesAll(workBook, sheetName, styles) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setAlignmentStyles(workBook, sheetName, cell, styles);
@@ -445,7 +487,7 @@ function setAlignmentVertical(workBook, sheetName, cell, vertical) {
 	return workBook;
 }
 
-function setAlignmentVerticalAll(workBook, sheetName,vertical) {
+function setAlignmentVerticalAll(workBook, sheetName, vertical) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setAlignmentVertical(workBook, sheetName, cell, vertical);
@@ -460,7 +502,7 @@ function setAlignmentHorizontal(workBook, sheetName, cell, horizontal) {
 	return workBook;
 }
 
-function setAlignmentHorizontalAll(workBook, sheetName,horizontal) {
+function setAlignmentHorizontalAll(workBook, sheetName, horizontal) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setAlignmentHorizontal(workBook, sheetName, cell, horizontal);
@@ -475,7 +517,7 @@ function setAlignmentWrapText(workBook, sheetName, cell, isWrapText) {
 	return workBook;
 }
 
-function setAlignmentWrapTextAll(workBook, sheetName,isWrapText) {
+function setAlignmentWrapTextAll(workBook, sheetName, isWrapText) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setAlignmentWrapText(workBook, sheetName, cell, isWrapText);
@@ -489,7 +531,7 @@ function setAlignmentReadingOrder(workBook, sheetName, cell, readingOrder) {
 	return workBook;
 }
 
-function setAlignmentReadingOrderAll(workBook, sheetName,readingOrder) {
+function setAlignmentReadingOrderAll(workBook, sheetName, readingOrder) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setAlignmentReadingOrder(workBook, sheetName, cell, readingOrder);
@@ -504,7 +546,7 @@ function setAlignmentTextRotation(workBook, sheetName, cell, textRotation) {
 	return workBook;
 }
 
-function setAlignmentTextRotationAll(workBook, sheetName,textRotation) {
+function setAlignmentTextRotationAll(workBook, sheetName, textRotation) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setAlignmentTextRotation(workBook, sheetName, cell, textRotation);
@@ -542,7 +584,8 @@ function setBorderStyles(workBook, sheetName, cell, styles) {
 	return workBook;
 }
 
-function setBorderStylesAll(workBook, sheetName,styles) {
+function setBorderStylesAll(workBook, sheetName, styles) {
+	this.initAllCell(workBook, sheetName);
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setBorderStyles(workBook, sheetName, cell, styles);
@@ -550,7 +593,7 @@ function setBorderStylesAll(workBook, sheetName,styles) {
 	}
 }
 
-//设置单元格上下左右边框
+//设置单元格上下左右边框默认样式
 function setBorderDefault(workBook, sheetName, cell) {
 	init(workBook, sheetName, cell);
 	workBook.Sheets[sheetName][cell].s.border = borderAll;
@@ -559,6 +602,7 @@ function setBorderDefault(workBook, sheetName, cell) {
 
 //设置所有单元默认格边框
 function setBorderDefaultAll(workBook, sheetName) {
+	this.initAllCell(workBook, sheetName);
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setBorderDefault(workBook, sheetName, cell);
@@ -573,7 +617,8 @@ function setBorderTop(workBook, sheetName, cell, top) {
 	return workBook;
 }
 
-function setBorderTopAll(workBook, sheetName,top) {
+function setBorderTopAll(workBook, sheetName, top) {
+	this.initAllCell(workBook, sheetName);
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setBorderTop(workBook, sheetName, cell, top);
@@ -589,6 +634,7 @@ function setBorderTopDefault(workBook, sheetName, cell) {
 }
 
 function setBorderTopDefaultAll(workBook, sheetName) {
+	this.initAllCell(workBook, sheetName);
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setBorderTopDefault(workBook, sheetName, cell);
@@ -603,7 +649,8 @@ function setBorderBottom(workBook, sheetName, cell, bottom) {
 	return workBook;
 }
 
-function setBorderBottomAll(workBook, sheetName,bottom) {
+function setBorderBottomAll(workBook, sheetName, bottom) {
+	this.initAllCell(workBook, sheetName);
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setBorderBottom(workBook, sheetName, cell, bottom);
@@ -620,6 +667,7 @@ function setBorderBottomDefault(workBook, sheetName, cell) {
 }
 
 function setBorderBottomDefaultAll(workBook, sheetName) {
+	this.initAllCell(workBook, sheetName);
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setBorderBottomDefault(workBook, sheetName, cell);
@@ -634,7 +682,8 @@ function setBorderLeft(workBook, sheetName, cell, left) {
 	return workBook;
 }
 
-function setBorderLeftAll(workBook, sheetName,left) {
+function setBorderLeftAll(workBook, sheetName, left) {
+	this.initAllCell(workBook, sheetName);
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setBorderLeft(workBook, sheetName, cell, left);
@@ -649,6 +698,7 @@ function setBorderLeftDefault(workBook, sheetName, cell) {
 }
 
 function setBorderLeftDefaultAll(workBook, sheetName) {
+	this.initAllCell(workBook, sheetName);
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setBorderLeftDefault(workBook, sheetName, cell);
@@ -663,7 +713,8 @@ function setBorderRight(workBook, sheetName, cell, right) {
 	return workBook;
 }
 
-function setBorderRightAll(workBook, sheetName,right) {
+function setBorderRightAll(workBook, sheetName, right) {
+	this.initAllCell(workBook, sheetName);
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setBorderRight(workBook, sheetName, cell, right);
@@ -678,6 +729,7 @@ function setBorderRightDefault(workBook, sheetName, cell) {
 }
 
 function setBorderRightDefaultAll(workBook, sheetName) {
+	this.initAllCell(workBook, sheetName);
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setBorderRightDefault(workBook, sheetName, cell);
@@ -692,7 +744,8 @@ function setBorderDiagonal(workBook, sheetName, cell, diagonal) {
 	return workBook;
 }
 
-function setBorderDiagonalAll(workBook, sheetName,diagonal) {
+function setBorderDiagonalAll(workBook, sheetName, diagonal) {
+	this.initAllCell(workBook, sheetName);
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setBorderDiagonal(workBook, sheetName, cell, diagonal);
@@ -707,6 +760,7 @@ function setBorderDiagonalDefault(workBook, sheetName, cell) {
 }
 
 function setBorderDiagonalDefaultAll(workBook, sheetName) {
+	this.initAllCell(workBook, sheetName);
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setBorderDiagonalDefault(workBook, sheetName, cell);
@@ -720,7 +774,8 @@ function setBorderDiagonalUp(workBook, sheetName, cell, isDiagonalUp) {
 	return workBook;
 }
 
-function setBorderDiagonalUpAll(workBook, sheetName,isDiagonalUp) {
+function setBorderDiagonalUpAll(workBook, sheetName, isDiagonalUp) {
+	this.initAllCell(workBook, sheetName);
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setBorderDiagonalUp(workBook, sheetName, cell, isDiagonalUp);
@@ -734,7 +789,8 @@ function setBorderDiagonalDown(workBook, sheetName, cell, isDiagonalDown) {
 	return workBook;
 }
 
-function setBorderDiagonalDownAll(workBook, sheetName,isDiagonalDown) {
+function setBorderDiagonalDownAll(workBook, sheetName, isDiagonalDown) {
+	this.initAllCell(workBook, sheetName);
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
 			setBorderDiagonalDown(workBook, sheetName, cell, isDiagonalDown);
@@ -745,12 +801,12 @@ function setBorderDiagonalDownAll(workBook, sheetName,isDiagonalDown) {
 //默认样式，多单元格设置样式
 
 //设置所有单元格字体样式
-function setFgColorStylesAll(workBook, sheetName,fontType,fontColor,fontSize) {
+function setFgColorStylesAll(workBook, sheetName, fontType, fontColor, fontSize) {
 	for (cell in workBook.Sheets[sheetName]) {
 		if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
-			setFontType(workBook, sheetName, cell,fontType);
-			setFontColorRGB(workBook, sheetName, cell,fontColor);
-			setFontSize(workBook, sheetName, cell,fontSize);
+			setFontType(workBook, sheetName, cell, fontType);
+			setFontColorRGB(workBook, sheetName, cell, fontColor);
+			setFontSize(workBook, sheetName, cell, fontSize);
 		}
 	}
 }
