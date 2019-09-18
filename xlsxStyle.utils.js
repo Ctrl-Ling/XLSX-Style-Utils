@@ -859,4 +859,56 @@ XSU=({
 		}
 	},
 
+	//合并同一列中内容一样的相邻行
+	mergeSameColCells: function(workBook,sheetName,col) {
+		var cells=[];
+		for (cell in workBook.Sheets[sheetName]) {
+			if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+				if (cell.substr(0, 1) == col) {
+					cells.push(cell);//获得该列单元格数组，升序
+				}
+			}
+		}
+		for(var i = 0;i<cells.length-1;){
+			for(var j=i+1;j<cells.length;j++){
+				if(workBook.Sheets[sheetName][cells[i]].v == workBook.Sheets[sheetName][cells[j]].v){
+					this.mergeCells(workBook,sheetName,cells[i],cells[j]);
+					if(j==cells.length-1){
+						i=j;
+					}
+				}
+				else{	//当且仅当相邻的两个cell值相同时才合并
+					i=j;
+					break;
+				}
+			}
+		}
+	},
+
+	//合并同一行中内容一样的相邻列
+	mergeSameRowCells: function(workBook,sheetName,row) {
+		var cells=[];
+		for (cell in workBook.Sheets[sheetName]) {
+			if (cell != '!cols' && cell != '!merges' && cell != '!ref') {
+				if (cell.substr(1) == row) {
+					cells.push(cell);//获得该列单元格数组，升序
+				}
+			}
+		}
+		for(var i = 0;i<cells.length-1;){
+			for(var j=i+1;j<cells.length;j++){
+				if(workBook.Sheets[sheetName][cells[i]].v == workBook.Sheets[sheetName][cells[j]].v){
+					this.mergeCells(workBook,sheetName,cells[i],cells[j]);
+					if(j==cells.length-1){
+						i=j;
+					}
+				}
+				else{	//当且仅当相邻的两个cell值相同时才合并
+					i=j;
+					break;
+				}
+			}
+		}
+	},
+
 })
