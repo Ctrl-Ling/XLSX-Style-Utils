@@ -911,4 +911,28 @@ XSU=({
 		}
 	},
 
+	//当前表格最大行数 return int
+	getMaxRow: function(workBook,sheetName) {
+		var length = 0;
+		for (var ever in workBook.Sheets[sheetName]) {
+			temp = parseInt(ever.substr(1));
+			if (temp > length) {
+				length = temp;
+			}
+		}
+		return length;
+	},
+
+	//当前表格最大列数 A起步 return string
+	getMaxCol: function(workBook,sheetName) {
+		var length = 'A';
+		for (var ever in workBook.Sheets[sheetName]) {
+			temp = ever.substr(0, 1);
+			if (temp > length) {
+				length = temp;
+			}
+		}
+		return length;
+	},
+
 })
