@@ -32,6 +32,8 @@ xlsxStyle.utils.js XSU本项目核心文件，基于XS的方法二次封装，�
 由于JX和XS所暴露出来的方法调用变量名一样（都是XLSX），同时引用时必然会覆盖掉另一个，故我将XS所暴露的变量名修改为xlsxStyle。调用XS方法时请使用此变量名。调用JX方法时使用XLSX。具体原因参考:https://blog.csdn.net/tian_i/article/details/84327329
 
 对XS的样式调整进行二次封装在utils工具包中，部分测试用例参考：
+
+例子1：
   ```javascript
   	//test
 	var wb = wb1;
@@ -75,7 +77,34 @@ xlsxStyle.utils.js XSU本项目核心文件，基于XS的方法二次封装，�
 	//保存，使用FileSaver.js
 	return saveAs(new Blob([XSU.s2ab(wbout)],{type:""}), "test.xlsx");
   ```
-  utils持续更新中。只干了一些微小的工作🐸测试用例较少，建议查看utils源码
+  
+例子2：
+```
+    //自定义对应表格样式
+    setWorkbookStyle: function(wb,sheet){
+        var cols = wensShrTableUtil.getCols(wb.Sheets[sheet]);//当前最大列数
+        var rows = wensShrTableUtil.getRows(wb.Sheets[sheet]);//当前最大行数
+        //wb样式处理，调用xlsxStyle.utils方法
+
+        //------------------通用表格样式----------------------------
+        XSU.mergeCells(wb,sheet,"A1",cols+'1'); //合并title单元格
+        XSU.setFontTypeAll(wb,sheet,'仿宋');//字体：仿宋
+        XSU.setAlignmentHorizontalAll(wb,sheet,'center');//垂直居中
+        XSU.setAlignmentVerticalAll(wb,sheet,'center');//水平居中
+        XSU.setAlignmentWrapTextAll(wb,sheet,true);//自动换行
+        XSU.setFontBoldOfCols(wb,sheet,true,'A');//设置第一列加粗
+        XSU.setFontBoldOfRows(wb,sheet,true,'2');//设置第二行标题行加粗
+        XSU.setBorderDefaultAll(wb,sheet);//设置所有单元格默认边框
+
+        //-------------------------个性化----------------------------
+        //列宽设置 1wch为1英文字符宽度
+        var width = [{wch: 25}, {wch: 15}, {wch: 15}, {wch: 15}];
+        XSU.setColWidth(wb,sheet,width);
+
+        XSU.setTitleStylesDefault(wb,sheet);//设置A1单元格title默认样式 必须最后设置 否则可能会被其他覆盖
+    }
+```
+utils持续更新中。只干了一些微小的工作🐸测试用例较少，建议查看utils源码
   
   ## 使用
   
