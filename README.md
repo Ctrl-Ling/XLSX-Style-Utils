@@ -79,7 +79,7 @@ xlsxStyle.utils.js XSU本项目核心文件，基于XS的方法二次封装，�
   ```
   
 例子2：
-```
+```javascript
     //自定义对应表格样式
     setWorkbookStyle: function(wb,sheet){
         var cols = wensShrTableUtil.getCols(wb.Sheets[sheet]);//当前最大列数
