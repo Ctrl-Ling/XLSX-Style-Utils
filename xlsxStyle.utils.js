@@ -871,7 +871,8 @@ XSU=({
 		}
 		for(var i = 0;i<cells.length-1;){
 			for(var j=i+1;j<cells.length;j++){
-				if(workBook.Sheets[sheetName][cells[i]].v == workBook.Sheets[sheetName][cells[j]].v){
+				//内容一样且不为空则合并
+				if(workBook.Sheets[sheetName][cells[i]].v == workBook.Sheets[sheetName][cells[j]].v && workBook.Sheets[sheetName][cells[i]].v != ""){
 					this.mergeCells(workBook,sheetName,cells[i],cells[j]);
 					if(j==cells.length-1){
 						i=j;
