@@ -78,6 +78,10 @@ xlsxStyle.utils.js XSU本项目核心文件，基于XS的方法二次封装，�
 	return saveAs(new Blob([XSU.s2ab(wbout)],{type:""}), "test.xlsx");
   ```
   
+  
+![例子1效果图](https://github.com/Ctrl-Ling/XLSX-Style-Utils/blob/master/demo.png)
+
+  
 例子2：
 ```javascript
     //自定义对应表格样式
