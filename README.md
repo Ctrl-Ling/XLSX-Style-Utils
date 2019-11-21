@@ -79,7 +79,7 @@ xlsxStyle.utils.js XSU本项目核心文件，基于XS的方法二次封装，�
   ```
 
 
-  <div align=center>![例子1效果图](https://github.com/Ctrl-Ling/XLSX-Style-Utils/blob/master/demo.png)
+  <div align=center> ![例子1效果图](https://github.com/Ctrl-Ling/XLSX-Style-Utils/blob/master/demo.png) </div>
 
 
 例子2：
