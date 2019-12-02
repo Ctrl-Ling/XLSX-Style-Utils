@@ -37,7 +37,6 @@ xlsxStyle.utils.js XSU本项目核心文件，基于XS的方法二次封装，�
   ```javascript
   	//test
 	var wb = wb1;
-	console.log(wb);
 	var sheetName = wb.SheetNames[0];
 	utilsTest(wb);
 	//使用xlsxStyle.utils（XSU）对Workbook进行样式自定义
@@ -83,6 +82,8 @@ xlsxStyle.utils.js XSU本项目核心文件，基于XS的方法二次封装，�
 
 例子2：
 ```javascript
+    var wb = wb1;
+    var sheet = wb.SheetNames[0];
     //自定义对应表格样式
     setWorkbookStyle: function(wb,sheet){
         var cols = XSU.getMaxCol(wb,sheet);//当前最大列数
