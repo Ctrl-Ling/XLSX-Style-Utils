@@ -85,8 +85,8 @@ xlsxStyle.utils.js XSU本项目核心文件，基于XS的方法二次封装，�
 ```javascript
     //自定义对应表格样式
     setWorkbookStyle: function(wb,sheet){
-        var cols = wensShrTableUtil.getCols(wb.Sheets[sheet]);//当前最大列数
-        var rows = wensShrTableUtil.getRows(wb.Sheets[sheet]);//当前最大行数
+        var cols = XSU.getMaxCol(wb,sheet);//当前最大列数
+        var rows = XSU.getMaxRow(wb,sheet);//当前最大行数
         //wb样式处理，调用xlsxStyle.utils方法
 
         //------------------通用表格样式----------------------------
